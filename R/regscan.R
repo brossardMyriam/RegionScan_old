@@ -72,7 +72,6 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
     .packages=c("igraph", "rms", "SKAT", "foreach", "COMBAT", "brglm2", "ggplot2", 
       "reshape2", "doSNOW", "karyoploteR" )) %dopar% {
     regionout <- binout <- snpout <- outremoved <- filterout <- outsingleSNPall <- prunout <- assignout <- covoutput<-covarout<-NULL
-	message("test1")	
     regioninfo <-  regionc$regioninfo
 	message(paste("Region", regioninfo$region, sep=":"))
     region <- as.character(regioninfo["region"])
@@ -81,22 +80,17 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 	end <- as.numeric(regioninfo["end.bp"])
 	SNPinfo_region <- regionc[["SNPinfo_region"]]
 	data_region <- regionc[["data_region"]]
-    # message("test2")
-   tryCatch({
-   #message("test3")
-		if(!is.null(SNPinfo_region)) {  
+    tryCatch({
+   		if(!is.null(SNPinfo_region)) {  
 			processout<- RegionScan:::processing(data=data_region, pheno=pheno, covlist=covlist, 
 				SNPinfo=SNPinfo_region, mafcut=mafcut, multiallelic=multiallelic)
 			nSNPs <-nSNPs.kept <- length(processout$SNPinfo$variant)
-			#message("test4")
-        if(isTRUE(debug)) { save(processout, pheno, covlist, 
+			if(isTRUE(debug)) { save(processout, pheno, covlist, 
 			file=paste("chr", chr,"_", region, "_checking.Rdata", sep="")) } 
-			#message("test5")
 			if(nSNPs>1) {
 				clustout <- RegionScan:::clustering(data=processout$data[,processout$bialSNP], 
 				edgecut=edgecut) #clustering (biallelic SNPs only) 
-			#	message("test6")
-        if(length(processout$multialSNP.kept)>0) { #multi-allelic
+			if(length(processout$multialSNP.kept)>0) { #multi-allelic
             codechange.bial <- RegionScan:::recoding(binlist=clustout$binlist, data=processout$data) # recoding (for assignation multial SNP)
 		        assignout <- RegionScan:::assigning(binvector=clustout$binvector, codechange=codechange.bial$newcode, multialSNP.kept=processout$multialSNP.kept, data=processout$data, edgecut=edgecut)
             
@@ -126,14 +120,12 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
            }  
         } else { # no multi-allelic SNPs 
             if(isTRUE(LDpruning)) {  # optional
-				        #message("test7")
 						prunout <- RegionScan:::pruning(binvector=clustout$binvector, data=processout$data, rcut=rcut) 
 					      aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=prunout$binvector )
 				    } else {	# no pruning on LD
 					      aliasout <- RegionScan:::aliasing( pheno=pheno, data=processout$data, binvector=clustout$binvector )
             }
-           # message("test8")
-			binlist.MLC <- lapply(unique(aliasout$final), function(bin) { names(which(aliasout$final==bin)) })
+         binlist.MLC <- lapply(unique(aliasout$final), function(bin) { names(which(aliasout$final==bin)) })
 		        codechange.MLC <- RegionScan:::recoding(binlist.MLC, processout$data)$newcode # recoding (for MLC test)
 	       		binlist.LC <- list(unlist(names(aliasout$final)))
         		binvector.LC <- rep(1,length(unlist(aliasout$final)))
@@ -194,21 +186,18 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
      } else {
         bin.bfP<-lapply(unique(clustout$binvector), function(x) { names(which(clustout$binvector==x)) })
      }
-	 #message("test41")
-     binstart.bfP.bp <- unlist( lapply(bin.bfP, function(x) { min(as.numeric(as.character(subset(processout$SNPinfo,variant%in%x)$bp)))}))
+	 binstart.bfP.bp <- unlist( lapply(bin.bfP, function(x) { min(as.numeric(as.character(subset(processout$SNPinfo,variant%in%x)$bp)))}))
      binend.bfP.bp <- unlist( lapply(bin.bfP, function(x) {   max(as.numeric(as.character(subset(processout$SNPinfo, variant%in%x)$bp)))}))
      bin.afP<-lapply(unique(aliasout$final), function(x) { names(which(aliasout$final==x)) })
      binstart.afP.bp <- unlist( lapply(bin.afP, function(x) { min(as.numeric(as.character(subset(processout$SNPinfo, variant%in%x)$bp)))}))
      binend.afP.bp <- unlist( lapply(bin.afP, function(x) { max(as.numeric(as.character(subset(processout$SNPinfo, variant%in%x)$bp)))}))
      binsize.bfP<-unlist(lapply(bin.bfP, length))
      binsize.afP<-unlist(lapply(bin.afP, length))
-     #message("test42")
      binout <- data.frame(cbind(chr=chr, region=region, start.bp=start, end.bp=end, 
      binstart.bfP.bp=binstart.bfP.bp, binend.bfP.bp=binend.bfP.bp,
      binstart.afP.bp=binstart.afP.bp, binend.afP.bp=binend.afP.bp,
        binsize.bfP=binsize.bfP, binsize.afP=binsize.afP, MLCBout$deltabin))
-	#message("test43")
-		if(isTRUE(alltests)) {
+	 if(isTRUE(alltests)) {
 			MLCZout <- RegionScan:::MLC(Z=glmout$Z_g, invcor=glmout$invcor_g,  
 					binvector=aliasout$final, codechange=codechange.MLC, tol=tol)
 			LCZout <- RegionScan:::MLC(Z=glmout$Z_g, invcor=glmout$invcor_g, binvector=binvector.LC, 
@@ -217,7 +206,6 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
 				LCZ=LCZout$stat,LCZ.df=LCZout$df,LCZ.p=LCZout$pvalue)
 			binout <- c(binout,MLCZout$deltabin)
 		}
-		#message("test44")
 		snpout<-data.frame(cbind( chr=chr, region=region, start.bp=start, end.bp=end, 
 				bin=aliasout$final, processout$SNPinfo[match(names(aliasout$final),
 				processout$SNPinfo$variant),c("bp","multiallelic","ref","alt","maf")],
@@ -226,9 +214,7 @@ regscan <- function(phenocov=NULL, pheno, REGIONinfo, geno_type, pheno_type,
         		subset(sgout,variant%in%names(aliasout$final)), 
 				mglm.vif=glmout$vif, mglm.beta=glmout$beta_g, 
 				mglm.se=glmout$beta_SE, mglm.pvalue=glmout$p_g ))
-		#message(snpout)
-		#message(glmout)
-		#message("test45")
+		
     	# removed list
 			allremoved<-filterout<-NULL
 			if(length(processout$removed.mafcut)>0) { allremoved<-data.frame(cbind(variant=processout$removed.mafcut, bin=NA, reason="mafcut")) }

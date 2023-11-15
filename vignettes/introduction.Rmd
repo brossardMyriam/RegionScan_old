@@ -1,5 +1,5 @@
 ---
-title: "introduction"
+title: "RegionScan: A comprehensive R package for region-level genome-wide testing and visualization with integration of alternative region-level multiple-variant and single-variant tests"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -15,5 +15,21 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+devtools::install_github("BrossardMyriam/RegionScan")
+```
+
+
+```{r setup}
 library(RegionScan)
+```
+
+```{r how to use}
+head(SNPinfo)
+head(regioninfo)
+head(regioninfo)
+```
+
+```{r region-level analysis }
+ exp1<-regscan(phenocov=phenocov,data=data, SNPinfo=SNPinfo,
++ regionlist=c(2370,2372,2380),REGIONinfo=REGIONinfo, pheno="pheno_binary", pheno_type = "D", geno_type = "D")
 ```
