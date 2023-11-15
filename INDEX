@@ -1,0 +1,16 @@
+LocusPlot               LocusPlot : produces a pdf file including a
+                        plot of region-level results for a set of
+                        contiguous regions
+MLCbinsnpPlot           MLCbinsnpPlot : produces a pdf file including
+                        the position of the SNPs along the chr per LD
+                        bin for the region specified
+MiamiPlot               MiamiPlot : produces a pdf file including a
+                        miami plot for a pair of tests specified
+RegionHeatmap           RegionHeatmap : produces heatmaps of
+                        correlation matrices within each region
+                        (internal function)
+qqregscanPlot           qqregscanPlot : qq plot for a specified test
+recodeVCF               recodeVCF : prepare input file for region-level
+                        analysis
+regscan                 regscan : main function for genome-wide
+                        region-level analysis
