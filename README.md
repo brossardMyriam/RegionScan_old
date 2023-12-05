@@ -16,7 +16,9 @@ install_github("brossardMyriam/RegionScan")
 ```
 
 ## Illustration of `RegionScan` capabilities
-[!C:\Users\bross\OneDrive\Haplotypes_CLQD_MLC\RegionScan_paper\sent_to_coauthors_May30/Fig1_version1_sept13.pdf]
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.][(https://github.com/brossardMyriam/RegionScan/blob/main/Fig1_version1_sept13.pdf)]
+
+ <img src="https://github.com/brossardMyriam/RegionScan/blob/main/Fig1_version1_sept13.pdf" width="1200px" />
 
 ## Authors
 - Myriam Brossard (brossard@lunenfeld.ca), author and main developer
