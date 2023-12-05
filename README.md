@@ -6,8 +6,8 @@ RegionScan is a R package for comprehensive and scalable region-level genome-wid
 ## Download and install
 
 Use the devtools package (available from CRAN) to install automatically from this GitHub repository:
-library(devtools)
-install_github("brossardMyriam/RegionScan")
+``library(devtools)
+``install_github("brossardMyriam/RegionScan")
 
 ## Authors
 Myriam Brossard (author and main developer)
