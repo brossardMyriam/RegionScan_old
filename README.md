@@ -14,18 +14,19 @@ install automatically from this GitHub repository:
 library(devtools)
 install_github("brossardMyriam/RegionScan")
 ```
-## Illustration of `RegionScan` capabilities
+
+## Usage
+Please see the *add vignette*
+
+## Overview of `RegionScan` capabilities
  <img src="https://github.com/brossardMyriam/RegionScan/blob/main/Fig1_Sept12_CIHR.gif" />
 
 ## Authors
 - Myriam Brossard (brossard@lunenfeld.ca), author and main developer
 - Yun J Yoo, contributor
 
-## Documentation 
-The reference and manuel PDF can be found here: ...
-
 ## Citation
-RegionScan.... [ link to biorxiv paper]
+[ link to biorxiv paper]
 
 ## License
 This package is released under the [GNU General Public License (GPL) v3.0.](https://www.gnu.org/licenses/gpl-3.0.html)
